@@ -928,7 +928,11 @@
          * @returns void
          */
         setKeySequenceDelay: function(timeout) {
-            _keySequenceDelay = timeout;
+            if (timeout > 10) {
+                _keySequenceDelay = timeout;
+            } else {
+                throw "Mousetrap: Unable to set timeout to " + timeout;
+            }
         },
 
         /**
