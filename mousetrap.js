@@ -187,14 +187,7 @@
          *
          * @type {boolean|string}
          */
-        _nextExpectedAction = false,
-
-        /**
-         * specify the target on which to listen for key events
-         *
-         * @type {Element|HTMLDocument}
-         */
-         _target = document;
+        _nextExpectedAction = false;
 
     /**
      * loop through the f keys, f1 to f19 and add them to the map
@@ -834,14 +827,19 @@
         /**
          * tell mousetrap to start listening for key events on the target
          *
-         * @returns void
+         * @param {Element|HTMLDocument}
+         * @return void
          */
-         start: function() {
+        start: function(target) {
             // start!
-            _addEvent(_target, 'keypress', _handleKeyEvent);
-            _addEvent(_target, 'keydown', _handleKeyEvent);
-            _addEvent(_target, 'keyup', _handleKeyEvent);
-         },
+            if (target.addEventListener || target.attachEvent) {
+                _addEvent(target, 'keypress', _handleKeyEvent);
+                _addEvent(target, 'keydown', _handleKeyEvent);
+                _addEvent(target, 'keyup', _handleKeyEvent);
+            } else {
+                throw "Mousetrap: Invalid target";
+            }
+        },
 
         /**
          * binds an event to mousetrap
@@ -927,21 +925,6 @@
 
             // stop for input, select, and textarea
             return element.tagName == 'INPUT' || element.tagName == 'SELECT' || element.tagName == 'TEXTAREA' || (element.contentEditable && element.contentEditable == 'true');
-        },
-
-        /**
-         * set the target on which to listen for key events
-         * the change only takes effect after Mousetrap.start is called
-         *
-         * @param {Element|HTMLDocument}
-         * @return void
-         */
-        setTarget: function(target) {
-            if (target.addEventListener || target.attachEvent) {
-                _target = target;
-            } else {
-                throw "Mousetrap: Invalid target set";
-            }
         },
 
         /**
