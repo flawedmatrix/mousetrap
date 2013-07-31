@@ -187,7 +187,14 @@
          *
          * @type {boolean|string}
          */
-        _nextExpectedAction = false;
+        _nextExpectedAction = false,
+
+        /**
+         * set the delay between keypresses to a number in ms
+         *
+         * @type {number}
+         */
+        _keySequenceDelay = 1000;
 
     /**
      * loop through the f keys, f1 to f19 and add them to the map
@@ -562,7 +569,7 @@
     }
 
     /**
-     * called to set a 1 second timeout on the specified sequence
+     * called to set a {_keySequenceDelay} timeout on the specified sequence
      *
      * this is so after each key press in the sequence you have 1 second
      * to press the next key before you have to start over
@@ -571,7 +578,7 @@
      */
     function _resetSequenceTimer() {
         clearTimeout(_resetTimer);
-        _resetTimer = setTimeout(_resetSequences, 1000);
+        _resetTimer = setTimeout(_resetSequences, _keySequenceDelay);
     }
 
     /**
@@ -913,6 +920,15 @@
 
             // stop for input, select, and textarea
             return element.tagName == 'INPUT' || element.tagName == 'SELECT' || element.tagName == 'TEXTAREA' || (element.contentEditable && element.contentEditable == 'true');
+        },
+
+        /**
+         * sets the delay between recognized keypresses in a sequence
+         *
+         * @returns void
+         */
+        setKeySequenceDelay: function(timeout) {
+            _keySequenceDelay = timeout;
         },
 
         /**
