@@ -925,6 +925,7 @@
         /**
          * sets the delay between recognized keypresses in a sequence
          *
+         * @param {Number} timeout
          * @returns void
          */
         setKeySequenceDelay: function(timeout) {
