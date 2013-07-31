@@ -827,7 +827,7 @@
         /**
          * tell mousetrap to start listening for key events on the target
          *
-         * @param {Element|HTMLDocument}
+         * @param {Element|HTMLDocument} target
          * @return void
          */
         start: function(target) {
